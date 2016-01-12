@@ -155,6 +155,8 @@ EGLBoolean WinCreate(ESContext *esContext, const char *title)
     // get identifiers for the provided atom name strings
     wm_state = XInternAtom (x_display, "_NET_WM_STATE", FALSE);
 
+    Atom fullscreen = XInternAtom ( x_display, "_NET_WM_STATE_FULLSCREEN", False ); // GN:
+
     memset ( &xev, 0, sizeof(xev) );
     xev.type                 = ClientMessage;
     xev.xclient.window       = win;
@@ -162,6 +164,7 @@ EGLBoolean WinCreate(ESContext *esContext, const char *title)
     xev.xclient.format       = 32;
     xev.xclient.data.l[0]    = 1;
     xev.xclient.data.l[1]    = FALSE;
+    xev.xclient.data.l[1]    = fullscreen; // GN: we can be fullscreen!
     XSendEvent (
        x_display,
        DefaultRootWindow ( x_display ),
